@@ -4,6 +4,7 @@ using FundooRepository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FundooManager.Manager
 {
@@ -14,7 +15,7 @@ namespace FundooManager.Manager
         {
             this.repository = repository;
         }
-        public string Register (UserModel user)
+        public Task<string> Register (UserModel user)
         {
             try
             {
@@ -25,12 +26,13 @@ namespace FundooManager.Manager
                 throw new Exception(ex.Message);
             }
         }
-        public string Login(Login userData)
+        public ResponseModel<UserModel> Login(Login userData)
         {
 
             try
             {
                 return this.repository.Login(userData);
+
             }
             catch (Exception ex)
             {
@@ -49,5 +51,31 @@ namespace FundooManager.Manager
             }
         }
 
+        public bool ResetPassword(UserCredentialModel userData)
+        {
+            try
+            {
+                return this.repository.ResetPassword(userData);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public string GenerateToken(string email)
+        {
+            try
+            {
+                return this.repository.GenerateToken(email);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+       
     }
 }
+    

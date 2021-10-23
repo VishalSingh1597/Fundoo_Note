@@ -10,4 +10,8 @@
     <ProjectReference Include="..\FundooRepository\FundooRepository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Microsoft\AspNetCore\" />
+  </ItemGroup>
+
 </Project>

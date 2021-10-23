@@ -7,6 +7,9 @@ namespace FundooModel
 {
    public class UserModel
     {
+        
+
+     
         [Key]
         public int UserId { get; set; }
 
@@ -20,5 +23,7 @@ namespace FundooModel
 
         [Required]
         public string Password { get; set; }
+      //  public List<NotesModel> Notes { get; set; }
+       
     }
 }
