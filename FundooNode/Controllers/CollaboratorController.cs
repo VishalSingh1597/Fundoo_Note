@@ -1,5 +1,8 @@
-﻿using FundooManager.Manager;
+﻿using FundooManager.Interface;
+using FundooManager.Manager;
 using FundooModel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,20 +11,24 @@ using System.Threading.Tasks;
 
 namespace FundooNote.Controllers
 {
+    [Authorize]
     public class CollaboratorController : ControllerBase
     {
+ 
         private readonly CollaboratorManager manager;
+
         public CollaboratorController(CollaboratorManager manager)
         {
             this.manager = manager;
         }
+
         [HttpPost]
         [Route("api/addCollaborator")]
-        public IActionResult AddNote([FromBody] CollaboratorModel collaboratorData)
+        public IActionResult AddNote([FromBody] CollaboratorModel collaboratorModel)
         {
             try
             {
-                string result = this.manager.AddCollaborator(collaboratorData);
+                string result = this.manager.AddCollaborator(collaboratorModel);
                 if (result.Equals("collaborator Added Successfully"))
                 {
                     return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
@@ -39,11 +46,11 @@ namespace FundooNote.Controllers
 
         [HttpDelete]
         [Route("api/deleteCollaborator")]
-        public IActionResult DeleteCollaborator(int noteId, int collaboratorId)
+        public IActionResult DeleteCollaborator( int collaboratorId)
         {
             try
             {
-                string result = this.manager.DeleteCollaborator(noteId, collaboratorId);
+                string result = this.manager.DeleteCollaborator( collaboratorId);
                 if (result.Equals("Collaborator Deleted Successfully"))
                 {
                     return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
@@ -56,6 +63,7 @@ namespace FundooNote.Controllers
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
+
 
         [HttpGet]
         [Route("api/getCollaborator")]

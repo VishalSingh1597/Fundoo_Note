@@ -8,8 +8,9 @@ namespace FundooManager.Interface
     public interface ICollaboratorManager
     {
 
-        string AddCollaborator(CollaboratorModel collaboratorData);
-        string DeleteCollaborator(int noteId, int collaboratorId);
+        string AddCollaborator(CollaboratorModel collaboratorModel);
+        string DeleteCollaborator( int collaboratorId);
         List<CollaboratorModel> GetCollaborator(int noteId);
     }
 }
+

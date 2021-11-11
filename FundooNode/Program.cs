@@ -1,11 +1,12 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 namespace FundooNode
 {
@@ -13,7 +14,10 @@ namespace FundooNode
     {
         public static void Main(string[] args)
         {
+            var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            logger.Debug("init main function");
             CreateHostBuilder(args).Build().Run();
+            NLog.LogManager.Shutdown();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -21,6 +25,10 @@ namespace FundooNode
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }).ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(LogLevel.Information);
+                }).UseNLog();
     }
 }

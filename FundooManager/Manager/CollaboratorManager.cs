@@ -9,29 +9,28 @@ namespace FundooManager.Manager
 {
     public class CollaboratorManager : ICollaboratorManager
     {
-        private readonly ICollaboratorRepository repository;
 
+        private readonly ICollaboratorRepository repository;
         public CollaboratorManager(ICollaboratorRepository repository)
         {
             this.repository = repository;
         }
-
-        public string AddCollaborator(CollaboratorModel collaboratorData)
+        public string AddCollaborator(CollaboratorModel collaboratorModel)
         {
             try
             {
-                return this.repository.AddCollaborator(collaboratorData);
+                return this.repository.AddCollaborator(collaboratorModel);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        public string DeleteCollaborator(int noteId, int collaboratorId)
+        public string DeleteCollaborator( int collaboratorId)
         {
             try
             {
-                return this.repository.DeleteCollaborator(noteId, collaboratorId);
+                return this.repository.DeleteCollaborator( collaboratorId);
             }
             catch (Exception ex)
             {
@@ -52,5 +51,3 @@ namespace FundooManager.Manager
         }
     }
 }
-        
-   

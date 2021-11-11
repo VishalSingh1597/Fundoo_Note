@@ -1,247 +1,542 @@
-﻿using FundooManager.Interface;
-using FundooModel;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿//using FundooManager.Interface;
+//using FundooModel;
+//using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.Extensions.Logging;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Security.Claims;
+//using System.Threading.Tasks;
+
+
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="UserRepository.cs" company="BridgeLabs">
+//   Copyright © 2021 Company="BridgeLabs"
+// </copyright>
+// <creator name="Vishal"/>
+// ----------------------------------------------------------------------------------------------------------
 
 namespace FundooNote.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class NotesController : ControllerBase
+    using System;
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using FundooModel;
+    using FundooManager.Interface;
+
+    /// <summary>
+    /// NoteController class
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />  
+    [Authorize]
+    public class NoteController : ControllerBase
     {
-        private readonly INoteManager manager;
-        private readonly INoteManager repository;
-        public NotesController(INoteManager manager)
+        /// <summary>
+        /// The manager
+        /// </summary>
+        private readonly INotesManager manager;
+
+        /// <summary>
+        /// The logger
+        /// </summary>
+        private readonly ILogger<NoteController> logger;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NoteController"/> class.
+        /// </summary>
+        /// <param name="manager">The manager.</param>
+        /// <param name="logger">The logger.</param>
+        public NoteController(INotesManager manager, ILogger<NoteController> logger)
         {
             this.manager = manager;
-            this.repository = repository;
+            this.logger = logger;
         }
+
+        /// <summary>
+        /// Adds the note.
+        /// </summary>
+        /// <param name="noteData">The note data.</param>
+        /// <returns>Notes Added Successfully or not</returns>
         [HttpPost]
-        public ActionResult CreateNote(AddNote notes, int userId)
+        [Route("api/addnotes")]
+        public IActionResult AddNote([FromBody] NotesModel noteData)
         {
             try
             {
-                //int userId= Convert.ToInt32(User.FindFirst(x => x.Type == "userId").Value);
-                var isNoteAdded = this.manager.AddNewNote(notes, userId);
-
-                if (isNoteAdded == true)
+                this.logger.LogInformation("AddNote method called!!!");
+                string result = this.manager.AddNote(noteData);
+                if (result.Equals("Notes Addedd Successfully"))
                 {
-                    return Ok(new { message = "Added Note", data = notes });
+                    this.logger.LogInformation($"UserId:{noteData.UserId}Added Note");
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
                 }
-                return BadRequest(new { message = "Failed " });
+                else
+                {
+                    this.logger.LogInformation($"UserId:{noteData.UserId}Add Note Failed");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = result });
+                }
             }
             catch (Exception ex)
             {
-                return NotFound(new { message = ex.Message });
+                this.logger.LogWarning($"UserId:{noteData.UserId}Error Occured While Adding Note");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
 
-        private int GetIdFromToken()
+        /// <summary>
+        /// Deletes the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>Note Deleted or not</returns>
+        [HttpDelete]
+        [Route("api/deletenote")]
+        public IActionResult DeleteNote(int noteId)
         {
-            return Convert.ToInt32(User.FindFirst(x => x.Type == "userId").Value);
+            try
+            {
+                this.logger.LogInformation("DeleteNote method called!!!");
+                string result = this.manager.DeleteNote(noteId);
+                if (result.Equals("Note Deleted"))
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Deleted ");
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
+                }
+                else
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Deletion Failed ");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = result });
+                }
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogWarning($"Error Occured While Deleting Note NoteId:{noteId}");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
         }
 
+        /// <summary>
+        /// Changes the color of the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="noteColor">Color of the note.</param>
+        /// <returns>color Changed or not</returns>
+        [HttpPut]
+        [Route("api/changeColour")]
+        public IActionResult ChangeNoteColor(int noteId, string noteColor)
+        {
+            try
+            {
+                this.logger.LogInformation("ChangeNoteColor method called!!!");
+                string result = this.manager.ChangeNoteColor(noteId, noteColor);
+                if (result.Equals("Colour Updated"))
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Note Color Changed");
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = result });
+                }
+                else
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Note Color Changed Unsuccessfull");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = result });
+                }
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogWarning($"Error Ocuured While Changing Colour on NoteId:{noteId} ");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Changes the pin.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>return true if pin Toggled</returns>
+        [HttpPut]
+        [Route("api/changePin")]
+        public IActionResult ChangePin(int noteId)
+        {
+            try
+            {
+                this.logger.LogInformation("Change Pin method called!!!");
+                bool result = this.manager.ChangePin(noteId);
+                if (result)
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Toggled Pin");
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = "Pin Toggled" });
+                }
+                else
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Pin Toggled Failed");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Error!!Note not Found" });
+                }
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogWarning($"Error Ocuured While Changing Pin Function on NoteId:{noteId} ");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Archives the specified note identifier.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>true if Archived</returns>
+        [HttpPut]
+        [Route("api/Archive")]
+        public IActionResult Archive(int noteId)
+        {
+            try
+            {
+                this.logger.LogInformation("Archive method called!!!");
+                bool result = this.manager.Archive(noteId);
+                if (result)
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Archived ");
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = "Note Archived" });
+                }
+                else
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Archived Failed ");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Error!!Note not Found" });
+                }
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogWarning($"Error!! Ocuured While Changing Archive on NoteId:{noteId} ");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Moves to trash.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>return true if note moved to trash</returns>
+        [HttpPut]
+        [Route("api/moveToTrash")]
+        public IActionResult MoveToTrash(int noteId)
+        {
+            try
+            {
+                this.logger.LogInformation("MoveToTrash method called!!!");
+                bool result = this.manager.MoveToTrash(noteId);
+                if (result)
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Move to Trash ");
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = "Note Moved to Trash" });
+                }
+                else
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Move to Trash Failed");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Error!!Note not Found" });
+                }
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogWarning($"Error!! Ocuured While NoteId:{noteId} Moved to Trash ");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Restores the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>return true if note restored from trash</returns>
+        [HttpPut]
+        [Route("api/restoreNote")]
+        public IActionResult RestoreNote(int noteId)
+        {
+            try
+            {
+                this.logger.LogInformation("RestoreNote method called!!!");
+                bool result = this.manager.RestoreNote(noteId);
+                if (result)
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Restore From Trashed ");
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = "Note Restored" });
+                }
+                else
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Restore From Trashed Failed");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Error!!Note not Found" });
+                }
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogWarning($"Error!! Ocuured While NoteId:{noteId} Restored to Trash ");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Gets the note.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>All Notes</returns>
         [HttpGet]
-        public ActionResult GetAllNotes()
+        [Route("api/getNote")]
+        public IActionResult GetNote(int userId)
         {
             try
             {
-                int userId = GetIdFromToken();
-                var notes = repository.GetAllNotes(userId);
-
-                if (notes != null)
+                this.logger.LogInformation("GetNote method called!!!");
+                var result = this.manager.GetNote(userId);
+                if (result.Count > 0)
                 {
-                    return Ok(new { message = "Notes are as follows", data = notes });
+                    this.logger.LogInformation($"UserId:{userId} Fetched All Note ");
+                    return this.Ok(new ResponseModel<List<NotesModel>>() { Status = true, Message = "All Notes are Succesfully Fetched", Data = result });
                 }
-                return BadRequest(new { message = "Notes not available" });
+                else
+                {
+                    this.logger.LogInformation($"UserId:{userId} Fetched All Note Failed  ");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Error!!Note not Found" });
+                }
             }
             catch (Exception ex)
             {
-                return NotFound(new { message = ex.Message });
+                this.logger.LogWarning($"Error!! Ocuured While UserId:{userId} Getting All Notes ");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
-        [HttpGet("{noteId}")]
-        public ActionResult GetNoteByNoteId(int noteId)
+
+        /// <summary>
+        /// Updates the note.
+        /// </summary>
+        /// <param name="noteData">The note data.</param>
+        /// <returns>return true if note updated Successfully</returns>
+        [HttpPut]
+        [Route("api/updateNote")]
+        public IActionResult UpdateNote(int noteId, int userId, string title, string description)
         {
             try
             {
-                int userId = GetIdFromToken();
-                var note = repository.GetNoteByNoteId(userId, noteId);
-
-                if (note != null)
+                this.logger.LogInformation("UpdateNote method called!!!");
+                bool result = this.manager.UpdateNote(noteId, userId, title, description);
+                if (result)
                 {
-                    return Ok(new { message = "Note is as following", data = note });
+                    this.logger.LogInformation($"UserId:{userId} Update Note on NoteDd:{noteId}");
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = "Updated Succesfully" });
                 }
-                return BadRequest(new { message = "Note not available" });
+                else
+                {
+                    this.logger.LogInformation($"UserId:{userId} Update Note on NoteDd:{noteId} Failed");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Error!!Note not Found" });
+                }
             }
             catch (Exception ex)
             {
-                return NotFound(new { message = ex.Message });
+                this.logger.LogWarning($"Error Ocuured While UserId:{userId} Update Failed");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
-        [HttpGet("trash")]
-        public ActionResult GetBinNotes()
+
+        /// <summary>
+        /// Sets the reminder.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="addReminder">The add reminder.</param>
+        /// <returns>return true if note Reminder set </returns>
+        [HttpPut]
+        [Route("api/setReminder")]
+        public IActionResult SetReminder(int noteId, string addReminder)
         {
             try
             {
-                int userId = GetIdFromToken();
-                var trashNotes = repository.GetBinNotes(userId);
-
-                if (trashNotes != null)
+                this.logger.LogInformation("SetReminder method called!!!");
+                bool result = this.manager.SetReminder(noteId, addReminder);
+                if (result)
                 {
-                    return Ok(new { message = "Bin notes are as follows", data = trashNotes });
+                    this.logger.LogInformation($"NoteId:{noteId} Set new  Reminder");
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = "Reminder Set up Successfully" });
                 }
-                return BadRequest(new { message = "Bin notes not available" });
+                else
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Set new Reminder Failed");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Error!!Note not Found" });
+                }
             }
             catch (Exception ex)
             {
-                return NotFound(new { message = ex.Message });
+                this.logger.LogWarning($"Error Ocuured While NoteId:{noteId} setting Reminder ");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
-        [HttpGet("archive")]
-        public ActionResult GetArchiveNotes()
+
+        /// <summary>
+        /// Unsets the reminder.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>return true if note reminder removed</returns>
+        [HttpPut]
+        [Route("api/unsetReminder")]
+        public IActionResult UnsetReminder(int noteId)
         {
             try
             {
-                int userId = GetIdFromToken();
-                var archiveNotes = repository.GetArchiveNotes(userId);
-
-                if (archiveNotes != null)
+                this.logger.LogInformation("UnsetReminder method called!!!");
+                bool result = this.manager.UnsetReminder(noteId);
+                if (result)
                 {
-                    return Ok(new { message = "Archive notes are as follows", data = archiveNotes });
+                    this.logger.LogInformation($"NoteId:{noteId} Unset Reminder");
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = "Reminder removed" });
                 }
-                return BadRequest(new { message = "Archive notes not available" });
+                else
+                {
+                    this.logger.LogInformation($"NoteId:{noteId} Unset Reminder Failed");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Error!!Note not Found" });
+                }
             }
             catch (Exception ex)
             {
-                return NotFound(new { message = ex.Message });
+                this.logger.LogWarning($"Error Ocuured While NoteId:{noteId} Unsetting Reminder ");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
-        [HttpPut("{noteId}/trash-restore")]
-        public ActionResult BinRestoreNote(int noteId)
+
+        /// <summary>
+        /// Gets the reminder.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>all notes with reminder</returns>
+        [HttpGet]
+        [Route("api/getReminder")]
+        public IActionResult GetReminder(int userId)
         {
             try
             {
-                int userId = GetIdFromToken();
-                var noteToBeMoved = repository.BinRestoreNote(noteId, userId);
-
-                if (noteToBeMoved == true)
+                this.logger.LogInformation("GetReminder method called!!");
+                var result = this.manager.GetReminder(userId);
+                if (result.Count > 0)
                 {
-                    return Ok(new { message = "Operation successfull" });
+                    this.logger.LogInformation($"UserId:{userId} Get All Notes in Reminder");
+                    return this.Ok(new ResponseModel<List<NotesModel>>() { Status = true, Message = "All Notes are Succesfully Fetched", Data = result });
                 }
-                return BadRequest(new { message = "operation unsuccessfull " });
+                else
+                {
+                    this.logger.LogInformation($"UserId:{userId} Get All Notes in Reminder Failed");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Error!!No Note Found on Reminder" });
+                }
             }
             catch (Exception ex)
             {
-                return NotFound(new { message = ex.Message });
+                this.logger.LogWarning($"Error Ocuured While UserId:{userId} Getting All Notes in Reminder ");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
-        [HttpPut("{noteId}/archive-unarchive")]
-        public ActionResult ArchiveUnarchiveNote(int noteId)
+
+        /// <summary>
+        /// Gets the archive.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>all archive notes of user</returns>
+        [HttpGet]
+        [Route("api/getArchive")]
+        public IActionResult GetArchive(int userId)
         {
             try
             {
-                int userId = GetIdFromToken();
-                var noteToBeArchived = repository.ArchiveUnarchiveNote(noteId, userId);
-
-                if (noteToBeArchived == true)
+                this.logger.LogInformation("GetArchive method called!!!");
+                var result = this.manager.GetArchive(userId);
+                if (result.Count > 0)
                 {
-                    return Ok(new { message = "Operation successfull" });
+                    this.logger.LogInformation($"UserId:{userId} Get All Notes in Archive");
+                    return this.Ok(new ResponseModel<List<NotesModel>>() { Status = true, Message = "All Notes are Succesfully Fetched", Data = result });
                 }
-                return BadRequest(new { message = "operation unsuccessfull" });
+                else
+                {
+                    this.logger.LogInformation($"UserId:{userId} Get All Notes in Archive Failed");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Error!!No Note Found on Archive" });
+                }
             }
             catch (Exception ex)
             {
-                return NotFound(new { message = ex.Message });
+                this.logger.LogWarning($"Error Ocuured While UserId:{userId} Getting All Notes in Archive ");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
-        [HttpDelete("{noteId}")]
-        public ActionResult DeleteNote(int noteId)
+
+        /// <summary>
+        /// Gets the trash.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>all notes on trash</returns>
+        [HttpGet]
+        [Route("api/getTrash")]
+        public IActionResult GetTrash(int userId)
         {
             try
             {
-                int userId = GetIdFromToken();
-                var noteToBeDeleted = repository.DeleteNote(noteId, userId);
-
-                if (noteToBeDeleted == true)
+                this.logger.LogInformation("GetTrash method called!!!");
+                var result = this.manager.GetTrash(userId);
+                if (result.Count > 0)
                 {
-                    return Ok(new { message = "Note Deleted Successfully" });
+                    this.logger.LogInformation($"UserId:{userId} Get All Notes in Trash");
+                    return this.Ok(new ResponseModel<List<NotesModel>>() { Status = true, Message = "All Notes are Succesfully Fetched", Data = result });
                 }
-                return BadRequest(new { message = "operation unsuccessfull" });
+                else
+                {
+                    this.logger.LogInformation($"UserId:{userId} Get All Notes in Trash Failed");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Error!!No Note Found on Trash" });
+                }
             }
             catch (Exception ex)
             {
-                return NotFound(new { message = ex.Message });
+                this.logger.LogWarning($"Error Ocuured While UserId:{userId} Getting All Notes in Trash ");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
-        [HttpPut("{noteId}/update")]
-        public ActionResult UpdateNote(NotesModel update, int noteId)
+
+        /// <summary>
+        /// Empties the trash.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>return true if all note deleted on trash</returns>
+        [HttpDelete]
+        [Route("api/emptyTrash")]
+        public IActionResult EmptyTrash(int userId)
         {
             try
             {
-                int userId = GetIdFromToken();
-                var noteToBeUpdated = repository.UpdateNote(update, noteId, userId);
-
-                if (noteToBeUpdated == true)
+                this.logger.LogInformation("EmptyTash method called!!!");
+                bool result = this.manager.EmptyTrash(userId);
+                if (result)
                 {
-                    return Ok(new { message = "Note Updated Successfully", data = update });
+                    this.logger.LogInformation($"UserId:{userId} Empty Trash Folder");
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = "Trash is empty" });
                 }
-                return BadRequest(new { message = "operation unsuccessfull " });
+                else
+                {
+                    this.logger.LogInformation($"UserId:{userId} Empty Trash Folder Action Failed");
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Error!!No Note Found on trash" });
+                }
             }
             catch (Exception ex)
             {
-                return NotFound(new { message = ex.Message });
+                this.logger.LogWarning($"Error Ocuured While UserId:{userId} Deleting all Trash ");
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
             }
         }
-        [HttpPut("{noteId}/pin-unpin")]
-        public ActionResult PinUnpinNote(int noteId)
-        {
-            try
-            {
-                int userId = GetIdFromToken();
-                var noteToBePinned = repository.PinUnpinNote(noteId, userId);
 
-                if (noteToBePinned == true)
-                {
-                    return Ok(new { message = "Operation successfull" });
-                }
-                return BadRequest(new { message = "operation unsuccessfull" });
-            }
-            catch (Exception ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
-        }
-        [HttpPut("color")]
-        public ActionResult AddColor(int noteId, string color)
-        {
-            try
-            {
-                int userId = GetIdFromToken();
-                var noteToBeColored = repository .AddColor(noteId, color, userId);
-
-                if (noteToBeColored == true)
-                {
-                    return Ok(new { message = color + "added" });
-                }
-                return BadRequest(new { message = "color not added" });
-            }
-            catch (Exception ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
-        }
+        /// <summary>
+        /// Adds the image.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="imagePath">The image path.</param>
+        /// <returns>return true if image added to note</returns>
         [HttpPut]
         [Route("api/addImage")]
         public IActionResult AddImage(int noteId, IFormFile imagePath)
         {
             try
             {
-                bool result = repository.AddImage(noteId, imagePath);
+                bool result = this.manager.AddImage(noteId, imagePath);
                 if (result)
                 {
                     return this.Ok(new ResponseModel<string>() { Status = true, Message = "Image Uploaded" });
@@ -255,6 +550,11 @@ namespace FundooNote.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes the image.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>return true if note image deleted successfully </returns>
         [HttpPut]
         [Route("api/deleteImage")]
         public IActionResult DeleteImage(int noteId)
@@ -275,4 +575,4 @@ namespace FundooNote.Controllers
             }
         }
     }
-    }
+}

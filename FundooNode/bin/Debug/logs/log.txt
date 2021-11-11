@@ -1,0 +1,842 @@
+2021-10-27 18:49:35.0896|DEBUG|FundooNode.Program|init main function
+2021-10-27 18:49:36.5539|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-10-27 18:49:36.5559|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-10-27 18:49:36.5559|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-10-27 18:50:37.7191|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-10-27 18:50:39.0945|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-10-27 18:51:09.0584|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-10-27 18:51:09.1599|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-10-27 18:52:45.8021|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-10-27 18:52:45.9427|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-10-27 18:53:53.0812|INFO|FundooNote.Controllers.NoteController|ChangeNoteColor method called!!!
+2021-10-27 18:53:53.1177|INFO|FundooNote.Controllers.NoteController|NoteId:1 Note Color Changed
+2021-10-27 18:54:44.0834|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-10-27 18:54:44.0972|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-10-27 18:55:04.1573|INFO|FundooNote.Controllers.NoteController|Change Pin method called!!!
+2021-10-27 18:55:04.1818|INFO|FundooNote.Controllers.NoteController|NoteId:1 Toggled Pin
+2021-10-27 18:55:51.8796|INFO|FundooNote.Controllers.NoteController|Archive method called!!!
+2021-10-27 18:55:51.8925|INFO|FundooNote.Controllers.NoteController|NoteId:1 Archived 
+2021-10-27 18:56:32.9740|INFO|FundooNote.Controllers.NoteController|GetArchive method called!!!
+2021-10-27 18:56:32.9960|INFO|FundooNote.Controllers.NoteController|UserId:1 Get All Notes in Archive Failed
+2021-10-27 18:56:46.5120|INFO|FundooNote.Controllers.NoteController|GetArchive method called!!!
+2021-10-27 18:56:46.5120|INFO|FundooNote.Controllers.NoteController|UserId:2 Get All Notes in Archive Failed
+2021-10-27 18:56:54.8840|INFO|FundooNote.Controllers.NoteController|GetArchive method called!!!
+2021-10-27 18:56:54.8840|INFO|FundooNote.Controllers.NoteController|UserId:0 Get All Notes in Archive
+2021-10-27 18:58:55.6594|ERROR|Microsoft.EntityFrameworkCore.Database.Command|Failed executing DbCommand (19ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Labels] ([LabelName], [NoteId], [UserId])
+VALUES (@p0, @p1, @p2);
+SELECT [LabelId]
+FROM [Labels]
+WHERE @@ROWCOUNT = 1 AND [LabelId] = scope_identity();
+2021-10-27 18:58:55.7325|ERROR|Microsoft.EntityFrameworkCore.Update|An exception occurred in the database while saving changes for context type 'FundooRepository.Context.UserContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Labels_Users_UserId". The conflict occurred in database "FundooNode", table "dbo.Users", column 'UserId'.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+ClientConnectionId:8dd3fe70-a7a6-497d-9665-04cef67d81f4
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(DbContext _, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2021-10-27 18:59:42.2861|ERROR|Microsoft.EntityFrameworkCore.Database.Command|Failed executing DbCommand (2ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Labels] ([LabelName], [NoteId], [UserId])
+VALUES (@p0, @p1, @p2);
+SELECT [LabelId]
+FROM [Labels]
+WHERE @@ROWCOUNT = 1 AND [LabelId] = scope_identity();
+2021-10-27 18:59:42.2861|ERROR|Microsoft.EntityFrameworkCore.Update|An exception occurred in the database while saving changes for context type 'FundooRepository.Context.UserContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Labels_Users_UserId". The conflict occurred in database "FundooNode", table "dbo.Users", column 'UserId'.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+ClientConnectionId:8dd3fe70-a7a6-497d-9665-04cef67d81f4
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(DbContext _, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2021-10-27 19:02:07.4532|ERROR|Microsoft.EntityFrameworkCore.Database.Command|Failed executing DbCommand (2ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Labels] ([LabelName], [NoteId], [UserId])
+VALUES (@p0, @p1, @p2);
+SELECT [LabelId]
+FROM [Labels]
+WHERE @@ROWCOUNT = 1 AND [LabelId] = scope_identity();
+2021-10-27 19:02:07.4532|ERROR|Microsoft.EntityFrameworkCore.Update|An exception occurred in the database while saving changes for context type 'FundooRepository.Context.UserContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Labels_Notes_NoteId". The conflict occurred in database "FundooNode", table "dbo.Notes", column 'NoteId'.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+ClientConnectionId:8dd3fe70-a7a6-497d-9665-04cef67d81f4
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(DbContext _, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2021-10-27 22:42:30.3468|DEBUG|FundooNode.Program|init main function
+2021-10-27 22:42:34.0500|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-10-27 22:42:34.0500|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-10-27 22:42:34.0571|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-10-27 22:44:48.9871|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-10-27 22:44:51.2911|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-10-27 22:46:10.4012|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request.
+2021-11-01 11:19:15.6818|DEBUG|FundooNode.Program|init main function
+2021-11-01 11:19:24.1714|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-01 11:19:24.1847|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-01 11:19:24.2004|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-01 11:20:27.0859|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-01 11:20:30.4880|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-01 16:58:23.9653|DEBUG|FundooNode.Program|init main function
+2021-11-01 16:58:26.3469|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-01 16:58:26.3487|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-01 16:58:26.3487|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-01 17:00:05.3386|INFO|FundooNode.Controllers.UserController|Reset Password method called!!!
+2021-11-01 17:00:06.7637|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Reset Password Succesfully
+2021-11-01 18:06:07.0373|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-01 18:06:07.4245|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-01 21:58:15.3961|DEBUG|FundooNode.Program|init main function
+2021-11-01 21:58:16.9946|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-01 21:58:16.9961|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-01 21:58:17.0164|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-01 21:58:34.7072|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-01 21:58:35.9688|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-01 23:12:11.8554|DEBUG|FundooNode.Program|init main function
+2021-11-01 23:12:13.3943|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-01 23:12:13.3943|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-01 23:12:13.4096|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-01 23:12:36.7641|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-01 23:12:38.1408|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-01 23:27:08.4567|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-01 23:27:08.5753|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-02 11:17:31.0672|DEBUG|FundooNode.Program|init main function
+2021-11-02 11:18:01.3723|DEBUG|FundooNode.Program|init main function
+2021-11-02 11:21:14.0632|DEBUG|FundooNode.Program|init main function
+2021-11-02 11:26:12.0537|DEBUG|FundooNode.Program|init main function
+2021-11-02 11:26:13.8668|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-02 11:26:13.8707|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-02 11:26:13.8707|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-02 11:26:34.6289|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-02 11:26:36.0891|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-02 11:27:33.4114|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-02 11:27:33.4705|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-02 11:33:33.1528|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-02 11:33:33.3855|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-02 11:38:35.1930|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-02 11:38:35.2245|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-02 11:44:06.9656|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-02 11:44:06.9656|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-02 11:44:06.9803|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-02 11:44:06.9803|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-02 11:45:41.1861|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-02 11:45:41.2020|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-02 11:49:04.6333|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-02 11:49:04.6598|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-02 14:30:03.9404|DEBUG|FundooNode.Program|init main function
+2021-11-02 14:30:05.7722|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-02 14:30:05.7722|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-02 14:30:05.8060|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-02 14:30:18.3593|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-02 14:30:19.5554|INFO|FundooNode.Controllers.UserController|string Login Succesfully
+2021-11-02 14:35:33.3336|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-02 14:35:33.3694|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-02 14:40:35.8220|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-02 14:40:35.8545|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-02 14:56:47.7164|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-02 14:56:47.7589|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-02 14:57:56.7359|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-02 14:57:56.7359|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-02 14:57:56.7359|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-02 14:57:56.7553|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-02 15:00:32.8468|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-02 15:00:37.1222|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Got mail to Reset Password
+2021-11-02 15:10:07.6810|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-02 15:10:07.6810|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-02 15:10:07.7068|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-02 15:10:07.7185|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-02 15:12:51.1100|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-02 15:12:51.1100|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-02 15:12:51.1298|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-02 15:12:51.1298|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-02 15:14:06.1822|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-02 15:14:09.4208|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Got mail to Reset Password
+2021-11-03 10:25:27.6019|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-03 10:25:27.6019|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-03 10:25:27.6890|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-03 10:25:27.6890|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-03 10:26:53.1256|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-03 10:26:53.1256|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-03 10:27:03.4176|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-03 10:27:03.4176|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-05 14:37:34.5651|DEBUG|FundooNode.Program|init main function
+2021-11-05 14:37:38.0475|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-05 14:37:38.0475|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-05 14:37:38.0707|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-05 14:38:16.7427|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-05 14:38:18.9938|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-05 14:39:59.7206|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-05 14:39:59.7948|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-05 14:41:49.5809|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-05 14:41:49.9089|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-05 15:00:06.2261|DEBUG|FundooNode.Program|init main function
+2021-11-05 15:00:07.8031|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-05 15:00:07.8131|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-05 15:00:07.8131|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-05 15:00:39.3927|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-05 15:00:40.4572|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-05 15:01:47.8720|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-05 15:01:48.0479|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-05 15:03:26.2316|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-05 15:03:26.2494|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-05 15:03:45.7597|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-05 15:03:45.7690|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-05 15:03:50.4893|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-05 15:03:50.4893|INFO|FundooNode.Controllers.UserController|Error ! Email Id Not found to Reset Password
+2021-11-05 15:28:03.9624|DEBUG|FundooNode.Program|init main function
+2021-11-05 15:28:05.7790|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-05 15:28:05.7790|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-05 15:28:05.7790|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-05 15:28:43.4094|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-05 15:28:44.5402|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-05 19:58:02.5361|DEBUG|FundooNode.Program|init main function
+2021-11-05 19:58:04.8806|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-05 19:58:04.9013|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-05 19:58:04.9078|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-05 19:58:05.8151|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request.
+2021-11-05 19:59:19.6274|DEBUG|FundooNode.Program|init main function
+2021-11-05 19:59:21.5264|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-05 19:59:21.5290|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-05 19:59:21.5290|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-05 20:00:11.9182|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-05 20:00:13.9661|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-05 20:00:50.2769|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-05 20:00:50.6396|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-05 20:02:53.9873|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-05 20:02:54.0168|INFO|FundooNode.Controllers.UserController|shubham@gmail.com Login Succesfully
+2021-11-05 20:04:06.3566|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-05 20:04:10.6030|INFO|FundooNode.Controllers.UserController|shubham@gmail.com Got mail to Reset Password
+2021-11-05 20:04:20.3464|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-05 20:04:27.2034|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Got mail to Reset Password
+2021-11-05 20:09:10.6554|DEBUG|FundooNode.Program|init main function
+2021-11-05 20:09:12.5656|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-05 20:09:12.5656|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-05 20:09:12.5752|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-05 20:10:17.2394|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-05 20:11:54.4215|DEBUG|FundooNode.Program|init main function
+2021-11-05 20:11:56.4893|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-05 20:11:56.4893|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-05 20:11:56.4968|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-05 20:12:35.5078|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-05 20:12:37.2684|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-05 20:14:21.1630|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-05 20:14:21.5175|INFO|FundooNode.Controllers.UserController|ashish Registerd Succesfully
+2021-11-05 20:15:34.8883|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-05 20:15:34.9135|INFO|FundooNode.Controllers.UserController|Registration Failed
+2021-11-05 20:15:57.6432|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-05 20:15:57.6721|INFO|FundooNode.Controllers.UserController|ashishs Registerd Succesfully
+2021-11-05 20:17:37.4815|DEBUG|FundooNode.Program|init main function
+2021-11-05 20:17:39.4282|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-05 20:17:39.4349|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-05 20:17:39.4349|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-05 20:18:12.1701|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-05 20:18:33.1113|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Got mail to Reset Password
+2021-11-06 08:59:58.4067|DEBUG|FundooNode.Program|init main function
+2021-11-06 09:00:00.9071|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-06 09:00:00.9071|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-06 09:00:00.9071|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-06 09:00:33.7348|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-06 09:00:35.0606|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-06 09:01:09.4795|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-06 09:01:09.6792|INFO|FundooNode.Controllers.UserController|akshays Registerd Succesfully
+2021-11-06 09:02:14.5939|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-06 09:02:14.6105|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-06 09:03:08.0615|INFO|FundooNode.Controllers.UserController|Forgot Password method called!!!
+2021-11-06 09:03:11.7222|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Got mail to Reset Password
+2021-11-07 21:59:53.3127|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-07 21:59:53.5055|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-08 11:02:10.6471|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 11:02:10.7541|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-08 23:51:22.3045|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:22.4395|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:22.5077|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:22.5077|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:23.5363|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:23.5363|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:23.7446|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:23.7859|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:24.2294|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:24.2294|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:24.7636|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:24.7697|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:25.2493|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:25.2546|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:26.7886|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:26.7886|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:27.7416|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:27.7416|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:28.1019|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:28.1019|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:28.3743|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:28.3804|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:28.6258|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:28.6309|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:28.9270|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:28.9270|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:31.4812|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:31.4812|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:31.7098|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:31.7098|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-08 23:51:31.9420|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-08 23:51:31.9420|INFO|FundooNode.Controllers.UserController|Login Failed
+2021-11-09 00:56:29.1773|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-09 00:56:29.4329|INFO|FundooNote.Controllers.NoteController|UserId:17Added Note
+2021-11-09 01:28:13.7517|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-09 01:28:13.7844|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-09 01:29:38.0802|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-09 01:29:38.0943|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-09 14:24:07.9725|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-09 14:24:08.1631|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-09 14:25:01.7791|INFO|FundooNode.Controllers.UserController|Register method called!!!
+2021-11-09 14:25:01.8491|INFO|FundooNode.Controllers.UserController|govardhan Registerd Succesfully
+2021-11-09 14:26:39.1131|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-09 14:26:39.1298|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-09 14:33:34.1776|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-09 14:33:34.2311|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-09 16:03:14.4275|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-09 16:03:14.5597|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-09 16:03:29.3163|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-09 16:03:29.3858|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 09:37:47.6166|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 09:37:47.8267|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 09:54:11.3446|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 09:54:11.3760|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 09:54:39.5720|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 09:54:39.6403|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 09:56:31.1481|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 09:56:31.1668|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 09:57:52.2093|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 09:57:52.2093|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 09:57:58.7563|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 09:57:58.7563|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 09:59:11.8756|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 09:59:11.8849|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 09:59:16.3693|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 09:59:16.3840|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 09:59:34.9134|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 09:59:34.9308|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 09:59:37.0137|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 09:59:37.0238|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 10:03:00.5467|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 10:03:00.5467|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 10:03:09.9583|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 10:03:09.9583|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 10:15:27.6667|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 10:15:27.7014|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 10:17:23.9865|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 10:17:24.0180|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 10:17:28.8477|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 10:17:28.8517|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 10:28:00.7821|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 10:28:00.7977|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 10:30:21.6811|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 10:30:21.6939|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 10:31:36.1125|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 10:31:36.1220|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 11:09:41.1562|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 11:09:41.3112|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 11:09:44.6015|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 11:09:44.6015|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 11:09:53.1449|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 11:09:53.1972|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 11:14:19.6236|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 11:14:19.6382|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 13:36:36.6526|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 13:36:36.9219|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 14:05:12.0614|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:05:12.1450|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:05:19.5911|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:05:19.6003|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:06:13.4756|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 14:06:13.5307|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 14:12:10.7555|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:12:10.7791|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:12:20.1226|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:12:20.1300|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:12:52.4669|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:12:52.4669|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:13:04.8074|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 14:13:04.8188|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 14:13:44.8656|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:13:44.8656|INFO|FundooNote.Controllers.NoteController|UserId:2 Fetched All Note Failed  
+2021-11-10 14:14:19.4532|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:14:19.4883|INFO|FundooNote.Controllers.NoteController|UserId:17 Fetched All Note 
+2021-11-10 14:23:03.4989|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:23:03.5318|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:24:18.2767|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 14:24:18.2930|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 14:31:04.4030|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:31:04.4144|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:31:12.2824|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:31:12.2882|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:35:58.0000|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:35:58.0241|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:36:03.9515|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:36:03.9515|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:36:15.5182|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:36:15.5224|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:36:27.6024|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 14:36:27.6326|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 14:37:51.7573|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:37:51.7573|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:40:25.8793|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:40:25.8793|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:40:39.9623|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 14:40:39.9623|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 14:41:36.4886|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:41:36.4886|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:42:20.5818|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:42:20.5901|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:42:57.2174|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 14:42:57.2174|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 14:55:04.2917|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 14:55:04.3740|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 14:58:40.3338|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 14:58:40.3338|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 15:06:08.0272|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 15:06:08.0773|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 15:21:09.2409|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 15:21:09.2594|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 15:26:39.8499|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 15:26:39.8499|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 15:27:07.6380|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 15:27:07.6380|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 15:27:52.1933|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 15:27:52.2072|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 15:27:56.8190|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 15:27:56.8190|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 15:28:19.9816|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 15:28:19.9816|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 15:34:39.5003|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 15:34:39.5175|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 15:35:16.6702|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 15:35:16.6702|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 15:59:40.1229|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 15:59:40.2183|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 16:03:46.2537|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 16:03:46.2622|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 16:04:04.9032|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 16:04:04.9594|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 16:04:33.3938|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 16:04:33.3985|INFO|FundooNote.Controllers.NoteController|UserId:17 Fetched All Note 
+2021-11-10 16:11:42.9371|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 16:11:43.0410|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 16:12:24.9613|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 16:12:24.9613|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 16:15:15.5882|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 16:15:15.5882|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 16:15:28.1572|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 16:15:28.1647|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 16:24:39.8221|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 16:24:39.8463|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 16:24:50.7654|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 16:24:50.7707|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 16:38:05.1734|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 16:38:05.1957|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 16:38:50.7869|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 16:38:50.7869|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-10 16:39:01.3726|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-10 16:39:01.3726|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-10 16:40:30.5176|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-10 16:40:30.5221|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 00:42:38.7767|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 00:42:38.8752|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 00:52:02.9729|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 00:52:02.9893|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 00:52:35.9715|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-11 00:52:36.1202|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-11 00:53:06.8229|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-11 00:53:06.8229|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-11 00:53:33.8300|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 00:53:33.8335|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 00:53:47.9837|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 00:53:47.9915|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 08:41:59.7361|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 08:41:59.7474|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 09:12:13.4642|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-11 09:12:13.6150|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-11 09:15:26.8730|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-11 09:15:26.8860|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-11 09:16:23.9777|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-11 09:16:24.0182|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-11 09:16:39.4844|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 09:16:39.4915|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:18:13.3391|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:18:13.4152|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:27:05.7842|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:27:05.8496|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:27:05.8734|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:27:05.8806|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:27:19.1672|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-11 10:27:19.2879|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-11 10:27:27.8612|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:27:27.8719|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:27:27.9016|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:27:27.9016|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:29:37.7726|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:29:37.8248|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:32:17.7470|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:32:17.7649|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:35:46.0374|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:35:46.0513|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:39:12.2594|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:39:12.2978|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:39:27.3386|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:39:27.3386|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:41:26.4316|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:41:26.4316|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:42:58.7656|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:42:58.7766|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:43:10.3145|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:43:10.3245|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:43:28.6699|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:43:28.6699|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:46:58.5185|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:46:58.5324|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:48:21.4746|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-11 10:48:21.5229|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-11 10:48:29.5276|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:48:29.5276|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 10:49:17.8137|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 10:49:17.8221|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 11:20:16.1706|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 11:20:16.2671|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:02:38.6922|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:02:38.6922|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:18:12.9178|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:18:12.9924|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:31:20.1247|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 12:31:20.3019|INFO|FundooNote.Controllers.NoteController|UserId:17 Update Note on NoteDd:0 Failed
+2021-11-11 12:33:42.2661|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:33:42.2767|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:33:50.6088|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:33:50.6209|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:34:59.6908|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:34:59.6948|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:35:20.1763|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:35:20.1763|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:35:41.4421|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:35:41.4421|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:36:31.2184|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:36:31.2261|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:37:06.5020|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:37:06.5104|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:39:53.3083|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:39:53.3083|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:40:08.3489|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 12:40:08.3489|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 12:44:52.3423|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:44:52.3662|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:45:09.3955|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 12:45:09.3955|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 12:46:25.4048|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:46:25.4228|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:46:39.7539|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 12:46:39.7963|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 12:51:46.9054|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:51:46.9182|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:52:20.6395|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:52:20.6453|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:52:26.2382|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 12:52:26.2382|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 12:54:55.1690|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 12:54:55.2936|INFO|FundooNote.Controllers.NoteController|UserId:17 Update Note on NoteDd:17
+2021-11-11 12:55:08.6952|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 12:55:08.6952|INFO|FundooNote.Controllers.NoteController|UserId:17 Update Note on NoteDd:0 Failed
+2021-11-11 12:55:32.4612|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 12:55:32.4612|INFO|FundooNote.Controllers.NoteController|UserId:17 Update Note on NoteDd:17
+2021-11-11 12:56:01.0121|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 12:56:01.0293|INFO|FundooNote.Controllers.NoteController|UserId:17 Update Note on NoteDd:23
+2021-11-11 13:02:12.9505|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 13:02:13.0053|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 13:02:32.4331|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 13:02:32.4331|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 14:27:37.5678|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 14:27:37.7273|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:00:27.2715|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:00:27.3397|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:01:01.5649|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:01:01.5915|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:06:24.3850|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:06:24.5275|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:06:53.6437|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:06:53.6538|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:22:33.2573|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:22:33.3238|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:23:00.3042|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:23:00.3256|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:23:25.7628|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:23:25.7695|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:23:37.5325|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:23:37.5412|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:23:53.4846|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:23:53.4915|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:24:03.0380|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:24:03.0380|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:26:16.4087|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:26:16.4183|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:26:24.5244|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:26:24.5244|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:30:02.7348|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:30:02.7469|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:30:19.4027|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:30:19.4027|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:31:45.1658|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:31:45.1658|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:33:02.3006|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:33:02.3057|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:33:39.9488|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:33:39.9668|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:34:38.1513|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:34:38.1650|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:34:45.9363|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:34:45.9475|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:35:34.3196|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:35:34.3196|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:35:53.7035|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:35:53.7123|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:36:12.1484|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:36:12.1484|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:38:17.3879|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:38:17.3879|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:38:42.9426|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:38:42.9426|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:44:09.8096|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:44:09.8445|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:44:23.0412|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:44:23.0412|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:47:06.9527|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:47:06.9618|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:47:25.0513|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:47:25.0513|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:49:00.5989|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:49:00.6151|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:49:12.8728|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-11 15:49:13.0865|ERROR|Microsoft.EntityFrameworkCore.Database.Command|Failed executing DbCommand (75ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Boolean), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (Size = 4000), @p5='?' (DbType = Boolean), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Boolean), @p9='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Notes] ([NoteId], [Archive], [Colour], [Description], [Image], [Pin], [Reminder], [Title], [Trash], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2021-11-11 15:49:13.2313|ERROR|Microsoft.EntityFrameworkCore.Update|An exception occurred in the database while saving changes for context type 'FundooRepository.Context.UserContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert explicit value for identity column in table 'Notes' when IDENTITY_INSERT is set to OFF.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+ClientConnectionId:8040e460-4b84-4d19-b97a-910cc158e00c
+Error Number:544,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(DbContext _, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2021-11-11 15:49:13.5235|WARN|FundooNote.Controllers.NoteController|UserId:0Error Occured While Adding Note
+2021-11-11 15:50:59.2367|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:50:59.3363|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:51:18.6643|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:51:18.6643|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:53:25.1320|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:53:25.1767|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:53:41.2425|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:53:41.2425|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:54:58.4885|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:54:58.4885|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:55:09.8610|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:55:09.8669|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:55:46.3590|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 15:55:46.3784|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 15:55:55.0124|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:55:55.0558|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 15:57:41.6520|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 15:57:41.6520|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 16:01:18.1413|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 16:01:18.1520|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 16:01:26.8605|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 16:01:26.8727|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 18:13:21.3316|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 18:13:21.4843|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 18:57:38.8123|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 18:57:38.8950|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 18:57:55.3199|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 18:57:55.3385|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 18:59:25.9822|INFO|FundooNote.Controllers.NoteController|DeleteNote method called!!!
+2021-11-11 18:59:26.0231|INFO|FundooNote.Controllers.NoteController|NoteId:6 Deletion Failed 
+2021-11-11 18:59:47.9541|INFO|FundooNote.Controllers.NoteController|DeleteNote method called!!!
+2021-11-11 18:59:47.9694|INFO|FundooNote.Controllers.NoteController|NoteId:0 Deletion Failed 
+2021-11-11 19:00:32.6257|INFO|FundooNote.Controllers.NoteController|DeleteNote method called!!!
+2021-11-11 19:00:32.6318|INFO|FundooNote.Controllers.NoteController|NoteId:23 Deletion Failed 
+2021-11-11 19:01:03.5406|INFO|FundooNote.Controllers.NoteController|DeleteNote method called!!!
+2021-11-11 19:01:03.5406|INFO|FundooNote.Controllers.NoteController|NoteId:17 Deletion Failed 
+2021-11-11 19:01:34.8593|INFO|FundooNote.Controllers.NoteController|DeleteNote method called!!!
+2021-11-11 19:01:34.8677|INFO|FundooNote.Controllers.NoteController|NoteId:0 Deletion Failed 
+2021-11-11 19:01:35.0459|INFO|FundooNote.Controllers.NoteController|DeleteNote method called!!!
+2021-11-11 19:01:35.0515|INFO|FundooNote.Controllers.NoteController|NoteId:0 Deletion Failed 
+2021-11-11 19:01:47.8866|INFO|FundooNote.Controllers.NoteController|DeleteNote method called!!!
+2021-11-11 19:01:47.8866|INFO|FundooNote.Controllers.NoteController|NoteId:12 Deletion Failed 
+2021-11-11 19:03:17.6732|INFO|FundooNote.Controllers.NoteController|DeleteNote method called!!!
+2021-11-11 19:03:17.6846|INFO|FundooNote.Controllers.NoteController|NoteId:1 Deletion Failed 
+2021-11-11 19:03:30.9323|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-11 19:03:30.9992|INFO|FundooNote.Controllers.NoteController|UserId:0Added Note
+2021-11-11 19:03:53.4293|INFO|FundooNote.Controllers.NoteController|DeleteNote method called!!!
+2021-11-11 19:03:53.4293|INFO|FundooNote.Controllers.NoteController|NoteId:0 Deletion Failed 
+2021-11-11 19:04:05.3664|INFO|FundooNote.Controllers.NoteController|DeleteNote method called!!!
+2021-11-11 19:04:05.3881|INFO|FundooNote.Controllers.NoteController|NoteId:10 Deletion Failed 
+2021-11-11 20:12:31.5334|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 20:12:31.6633|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 20:20:52.8345|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 20:20:52.9381|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:12
+2021-11-11 20:24:25.9891|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-11 20:24:26.0221|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-11 20:32:58.5531|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-11 20:32:58.5697|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-11 20:38:11.6992|DEBUG|FundooNode.Program|init main function
+2021-11-11 20:38:15.0373|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-11 20:38:15.0373|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-11 20:38:15.0511|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-11 20:38:28.6048|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-11 20:38:29.9432|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-11 20:39:49.4516|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-11 20:39:49.4851|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-11 20:40:33.7715|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 20:40:33.8686|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 20:43:12.1286|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 20:43:12.1467|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 20:43:26.8712|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 20:43:26.8921|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 20:44:24.4424|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 20:44:24.4614|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 20:44:55.0336|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 20:44:55.0389|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 20:49:20.3386|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 20:51:46.6852|INFO|FundooNote.Controllers.NoteController|UserId:0 Update Note on NoteDd:0 Failed
+2021-11-11 21:22:19.1863|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 21:22:19.2729|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 21:22:44.7516|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-11 21:22:44.7694|INFO|FundooNode.Controllers.UserController|string Login Succesfully
+2021-11-11 21:25:34.2179|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 21:26:16.2686|INFO|FundooNote.Controllers.NoteController|UserId:1 Update Note on NoteDd:12
+2021-11-11 21:41:18.9530|DEBUG|FundooNode.Program|init main function
+2021-11-11 21:41:20.8192|INFO|Microsoft.Hosting.Lifetime|Application started. Press Ctrl+C to shut down.
+2021-11-11 21:41:20.8192|INFO|Microsoft.Hosting.Lifetime|Hosting environment: Development
+2021-11-11 21:41:20.8192|INFO|Microsoft.Hosting.Lifetime|Content root path: E:\BRF problems\FundooNode\FundooNode
+2021-11-11 21:41:55.9344|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-11 21:41:57.0920|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-11 21:43:45.0733|INFO|FundooNote.Controllers.NoteController|AddNote method called!!!
+2021-11-11 21:43:45.2762|INFO|FundooNote.Controllers.NoteController|UserId:1Added Note
+2021-11-11 21:44:46.3170|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 21:44:48.5609|INFO|FundooNote.Controllers.NoteController|UserId:1 Update Note on NoteDd:29
+2021-11-11 21:52:51.6716|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 21:52:51.6965|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 21:53:17.9608|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 21:53:17.9770|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 21:54:18.7049|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-11 21:54:18.7202|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-11 21:54:36.8590|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 21:54:36.8656|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 21:56:24.4727|INFO|FundooNode.Controllers.UserController|Login method called!!!
+2021-11-11 21:56:24.4898|INFO|FundooNode.Controllers.UserController|vishalr23singh@gmail.com Login Succesfully
+2021-11-11 21:56:35.8909|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 21:56:35.9019|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 21:58:27.1890|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 21:58:27.2067|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 21:58:27.4218|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 21:58:27.4351|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 21:58:35.5498|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 21:58:35.5778|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 22:00:51.1455|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 22:00:51.1905|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 22:00:52.8223|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 22:00:52.8223|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 22:00:55.6232|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 22:00:55.6346|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 22:02:54.5732|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 22:02:54.5822|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 22:02:54.8893|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 22:02:54.8945|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 22:03:02.2151|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 22:03:02.2151|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 22:03:21.9529|INFO|FundooNote.Controllers.NoteController|UpdateNote method called!!!
+2021-11-11 22:03:23.8625|INFO|FundooNote.Controllers.NoteController|UserId:1 Update Note on NoteDd:28
+2021-11-11 22:03:37.8918|INFO|FundooNote.Controllers.NoteController|GetNote method called!!!
+2021-11-11 22:03:37.8968|INFO|FundooNote.Controllers.NoteController|UserId:0 Fetched All Note 
+2021-11-11 22:04:04.8987|INFO|FundooNote.Controllers.NoteController|DeleteNote method called!!!
+2021-11-11 22:04:04.9127|INFO|FundooNote.Controllers.NoteController|NoteId:12 Deletion Failed 

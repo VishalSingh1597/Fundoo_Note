@@ -1,68 +1,266 @@
-﻿using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
-using FundooModel;
-using FundooRepository.Context;
-using FundooRepository.Interface;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Services.Account;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Account = Microsoft.VisualStudio.Services.Account.Account;
+﻿//using CloudinaryDotNet;
+//using CloudinaryDotNet.Actions;
+//using FundooModel;
+//using FundooRepository.Context;
+//using FundooRepository.Interface;
+//using Microsoft.AspNetCore.Http;
+//using Microsoft.EntityFrameworkCore;
+//using Microsoft.VisualStudio.Services.Account;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using Account = Microsoft.VisualStudio.Services.Account.Account;
 
+
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="UserRepository.cs" company="BridgeLabs">
+//   Copyright © 2021 Company="BridgeLabs"
+// </copyright>
+// <creator name="Vishal"/>
+// ----------------------------------------------------------------------------------------------------------
 namespace FundooRepository.Repository
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
+    using Models;
+    using FundooRepository.Context;
+    using FundooRepository.Interface;
+    using FundooModel;
+
+    /// <summary>
+    /// NotesRepository class
+    /// </summary>
+    /// <seealso cref="Repository.Interface.INotesRepository" />
     public class NotesRepository : INotesRepository
     {
+        /// <summary>
+        /// The user context
+        /// </summary>
         private readonly UserContext userContext;
-        private readonly object notesId;
 
-        public NotesRepository(UserContext userContext)
+        /// <summary>
+        /// The configuration
+        /// </summary>
+        private readonly IConfiguration configuration;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotesRepository"/> class.
+        /// </summary>
+        /// <param name="userContext">The user context.</param>
+        /// <param name="configuration">The configuration.</param>
+        public NotesRepository(UserContext userContext, IConfiguration configuration)
         {
             this.userContext = userContext;
+            this.configuration = configuration;
         }
-        UserModel user = new UserModel();
-        private object configuration;
-        private int noteId;
 
-        public bool AddNewNote(AddNote noteData, int userId)
+        /// <summary>
+        /// Adds the note.
+        /// </summary>
+        /// <param name="noteData">The note data.</param>
+        /// <returns>
+        /// success if note added
+        /// </returns>
+        public string AddNote(NotesModel noteData)
         {
             try
             {
-                NotesModel notes = new NotesModel()
-                {
-                    Title = noteData.Title,
-                    Description = noteData.Description,
-                    Reminder = noteData.Reminder,
-                    Collaborator = noteData.Collaborator,
-                    Color = noteData.Color,
-                    Image = noteData.Image,
-                    IsArchive = noteData.IsArchive,
-                    IsPin = noteData.IsPin,
-                    IsTrash = noteData.IsTrash
-                };
-
-                user = userContext.Users.FirstOrDefault(x => x.UserId == userId);
-                notes.Users = user;
-
                 if (noteData.Title != null || noteData.Description != null)
                 {
-                    userContext.Notes.Add(notes);
-                    userContext.SaveChanges();
-                    return true;
+                    this.userContext.Notes.Add(noteData);
+                    this.userContext.SaveChanges();
+                    return "Notes Addedd Successfully";
                 }
-                return false;
+
+                return "Unsuccessfull";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
-        public List<NotesModel> GetAllNotes(int userId)
+
+        /// <summary>
+        /// Deletes the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>
+        /// success if note deleted
+        /// </returns>
+        public string DeleteNote(int noteId)
         {
-         var notes = this.userContext.Notes.Where(x => x.UserId == userId && x.IsArchive == false && x.IsPin == false).ToList();
+            try
+            {
+                var checkNote = this.userContext.Notes.Find(noteId);
+                if (checkNote != null && checkNote.Trash == true)
+                {
+                    this.userContext.Notes.Remove(checkNote);
+                    this.userContext.SaveChanges();
+                    return "Note Deleted";
+                }
+
+                return "Note not Found";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Moves to trash.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>
+        /// true if item moved to trash
+        /// </returns>
+        public bool MoveToTrash(int noteId)
+        {
+            try
+            {
+                var checkNote = this.userContext.Notes.Find(noteId);
+                if (checkNote != null)
+                {
+                    checkNote.Trash = true;
+                    checkNote.Reminder = null;
+                    checkNote.Pin = false;
+                    this.userContext.SaveChanges();
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Restores the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>
+        /// restore note from trash
+        /// </returns>
+        public bool RestoreNote(int noteId)
+        {
+            try
+            {
+                var checkNote = this.userContext.Notes.Find(noteId);
+                if (checkNote != null)
+                {
+                    checkNote.Trash = false;
+                    this.userContext.SaveChanges();
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Changes the color of the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="notecolor">The note color.</param>
+        /// <returns>true if note color changed</returns>
+        public string ChangeNoteColor(int noteId, string notecolor)
+        {
+            try
+            {
+                var checkNote = this.userContext.Notes.Find(noteId);
+                if (checkNote != null)
+                {
+                    checkNote.Colour = notecolor;
+                    this.userContext.SaveChanges();
+                    return "Colour Updated";
+                }
+
+                return "Error!! Colour not updated ";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Changes the pin.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>
+        /// &gt;true if we Change Pin
+        /// </returns>
+        public bool ChangePin(int noteId)
+        {
+            try
+            {
+                var checkNote = this.userContext.Notes.Find(noteId);
+                if (checkNote != null)
+                {
+                    checkNote.Pin = checkNote.Pin ? false : true;
+                    checkNote.Archive = false;
+                    this.userContext.SaveChanges();
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Archives the specified note identifier.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>
+        /// true if item moved to Archive
+        /// </returns>
+        public bool Archive(int noteId)
+        {
+            try
+            {
+                var checkNote = this.userContext.Notes.Find(noteId);
+                if (checkNote != null)
+                {
+                    checkNote.Archive = checkNote.Archive ? false : true;
+                    checkNote.Pin = false;
+                    this.userContext.SaveChanges();
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Gets the note.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>
+        /// get all note in note
+        /// </returns>
+        public List<NotesModel> GetNote(int userId)
+        {
+            var notes = this.userContext.Notes.Where(x => x.UserId == userId && x.Archive == false && x.Trash == false).ToList();
             try
             {
                 if (notes != null)
@@ -78,25 +276,100 @@ namespace FundooRepository.Repository
             }
         }
 
-
-
-        public List<NotesModel> GetArchiveNotes(int userId)
+        /// <summary>
+        /// Updates the note.
+        /// </summary>
+        /// <param name="noteData">The note data.</param>
+        /// <returns>
+        /// updated note
+        /// </returns>
+        public bool UpdateNote(int noteId, int userId, string title, string description)
         {
             try
             {
-                var result = userContext.Notes.Where(e => e.UserId == userId && e.IsArchive == true).ToList();
+                var checkNote = this.userContext.Notes.Find(noteId);
 
-                return result;
+                if (checkNote != null)
+                {
+                    checkNote.Title = title;
+                    checkNote.Description = description;
+                    this.userContext.SaveChanges();
+                    return true;
+                }
+
+                return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
-            }
+        }
 
-        public List<NotesModel> GetBinNotes(int userId)
+        /// <summary>
+        /// Sets the reminder.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="addReminder">The add reminder.</param>
+        /// <returns>
+        /// add reminder
+        /// </returns>
+        public bool SetReminder(int noteId, string addReminder)
         {
-            var notes = this.userContext.Notes.Where(x => x.UserId == userId && x.IsArchive == false && x.IsBin == false).ToList();
+            try
+            {
+                var checkNote = this.userContext.Notes.Find(noteId);
+                if (checkNote != null)
+                {
+                    checkNote.Reminder = addReminder;
+                    this.userContext.SaveChanges();
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Unsets the reminder.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>
+        /// Unset reminder
+        /// </returns>
+        public bool UnsetReminder(int noteId)
+        {
+            try
+            {
+                var checkNote = this.userContext.Notes.Find(noteId);
+                if (checkNote != null)
+                {
+                    checkNote.Reminder = null;
+                    this.userContext.SaveChanges();
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Gets the reminder.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>
+        /// Notes in Reminder
+        /// </returns>
+        public List<NotesModel> GetReminder(int userId)
+        {
+            var notes = this.userContext.Notes.Where(x => x.UserId == userId && x.Reminder != null && x.Trash == false).ToList();
             try
             {
                 if (notes != null)
@@ -112,170 +385,99 @@ namespace FundooRepository.Repository
             }
         }
 
-        public bool BinRestoreNote(int noteId, int userId)
+        /// <summary>
+        /// Gets the archive.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>
+        /// Note in Archive
+        /// </returns>
+        public List<NotesModel> GetArchive(int userId)
         {
+            var notes = this.userContext.Notes.Where(x => x.UserId == userId && x.Archive == true && x.Trash == false).ToList();
             try
             {
-                var note = userContext.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
-
-                if (note != null)
+                if (notes != null)
                 {
-                    if (note.IsBin == false)
-                    {
-                        note.IsBin = true;
-                        userContext.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        note.IsBin = false;
-                        userContext.SaveChanges();
-                        return true;
-                    }
+                    return notes;
                 }
-                return false;
+
+                return null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
-        public bool ArchiveUnarchiveNote(int noteId, int userId)
+        /// <summary>
+        /// Gets the trash.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>
+        /// notes in trash
+        /// </returns>
+        public List<NotesModel> GetTrash(int userId)
         {
+            var notes = this.userContext.Notes.Where(x => x.UserId == userId && x.Trash == true).ToList();
             try
             {
-                var note = userContext.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
-
-                if (note != null)
+                if (notes != null)
                 {
-                    if (note.IsArchive == false)
-                    {
-                        note.IsArchive = true;
-                        userContext.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        note.IsArchive = false;
-                        userContext.SaveChanges();
-                        return true;
-                    }
+                    return notes;
                 }
-                return false;
+
+                return null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
-        public bool DeleteNote(int noteId, int userId)
+        /// <summary>
+        /// Empties the trash.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>
+        /// Trash empty or not
+        /// </returns>
+        public bool EmptyTrash(int userId)
         {
             try
             {
-                var noteToBeRemoved = userContext.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId && x.IsBin == true);
-
-                if (noteToBeRemoved != null)
+                var notes = this.userContext.Notes.Where(x => x.UserId == userId && x.Trash == true).ToList();
+                if (notes != null)
                 {
-                    userContext.Notes.Remove(noteToBeRemoved);
-                    userContext.SaveChanges();
+                    this.userContext.Notes.RemoveRange(notes);
+                    this.userContext.SaveChanges();
                     return true;
                 }
+
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
-        public bool UpdateNote(NotesModel update, int noteId, int userId)
-        {
-            try
-            {
-                var noteToBeUpdated = userContext.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId && x.IsBin == false);
-
-                noteToBeUpdated.Title = update.Title;
-                noteToBeUpdated.Description = update.Description;
-
-                if (update.Title != null || update.Description != null)
-                {
-                    userContext.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-        }
-
-        public bool PinUnpinNote(int noteId, int userId)
-        {
-            try
-            {
-                var note = userContext.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
-
-                if (note != null)
-                {
-                    if (note.IsPin == false)
-                    {
-                        note.IsPin = true;
-                        userContext.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        note.IsPin = false;
-                        userContext.SaveChanges();
-
-                        return true;
-                    }
-                }
-                return false;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public bool AddColor(int noteId, string color, int userId)
-        {
-            try
-            {
-                var note = userContext.Notes.SingleOrDefault(x => x.NoteId == noteId && x.IsBin == false);
-
-                if (note != null)
-                {
-                    note.Color = color;
-                    userContext.Entry(note).State = EntityState.Modified;
-                    userContext.SaveChanges();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        
-        }
-
+        /// <summary>
+        /// Adds the image.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="imagePath">The image path.</param>
+        /// <returns>
+        /// true if image added
+        /// </returns>
         public bool AddImage(int noteId, IFormFile imagePath)
         {
             try
             {
-                var note = this.userContext.Notes.Where(x => x.NoteId == noteId && x.IsBin == false).SingleOrDefault();
+                var note = this.userContext.Notes.Where(x => x.NoteId == noteId && x.Trash == false).SingleOrDefault();
                 if (note != null)
                 {
-                    Account account = new Account(this.configuration.Equals("CloudinaryAccount").Equals("CloudName").ToString, this.configuration.Equals("CloudinaryAccount").Equals("ApiKey").ToString, this.configuration.Equals("CloudinaryAccount").Equals("ApiSecret").ToString);
+                    Account account = new Account(this.configuration.GetSection("CloudinaryAccount").GetSection("CloudName").Value, this.configuration.GetSection("CloudinaryAccount").GetSection("ApiKey").Value, this.configuration.GetSection("CloudinaryAccount").GetSection("ApiSecret").Value);
                     Cloudinary cloudinary = new Cloudinary(account);
 
                     var uploadParams = new ImageUploadParams()
@@ -296,6 +498,14 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Deletes the image.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>
+        /// true if image deleted
+        /// </returns>
         public bool DeleteImage(int noteId)
         {
             try
@@ -315,11 +525,5 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
-
-        public List<NotesModel> GetNoteByNoteId(int userId, int noteId)
-        {
-            throw new NotImplementedException();
-        }
     }
-    }
- 
+}

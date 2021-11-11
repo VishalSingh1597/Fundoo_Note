@@ -43,11 +43,12 @@ namespace FundooRepository.Repository
                 throw new Exception(ex.Message);
             }
         }
-        public string DeleteCollaborator(int noteId, int collaboratorId)
+
+        public string DeleteCollaborator( int collaboratorId)
         {
             try
             {
-                var checkCollaborator = this.userContext.Collaborator.Where(x => x.CollaboratorId.Equals(collaboratorId) && x.NoteId == noteId).SingleOrDefault();
+                var checkCollaborator = this.userContext.Collaborator.Where(x => x.CollaboratorId==collaboratorId).SingleOrDefault();
 
                 if (checkCollaborator != null)
                 {
@@ -64,6 +65,7 @@ namespace FundooRepository.Repository
             }
         }
 
+ 
         public List<CollaboratorModel> GetCollaborator(int noteId)
         {
             try
@@ -84,4 +86,3 @@ namespace FundooRepository.Repository
         }
     }
 }
-    

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FundooModel
 {
-   public class UserCredentialModel
+     public class UserCredentialModel
     {
         public object email;
 
